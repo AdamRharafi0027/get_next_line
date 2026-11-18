@@ -5,27 +5,33 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: arharafi <arharafi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/12 19:06:07 by arharafi          #+#    #+#             */
-/*   Updated: 2026/11/13 07:33:30 by arharafi         ###   ########.fr       */
+/*   Created: 2026/11/16 09:56:46 by arharafi          #+#    #+#             */
+/*   Updated: 2026/11/17 07:51:57 by arharafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_BONUS_H
 # define GET_NEXT_LINE_BONUS_H
 
-# include <unistd.h>
-# include <stdlib.h>
-
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
-# define FD_MAX 1024
 
-// ========== Main Function ========== //
-char	*get_next_line_bonus(int fd);
-// ========== Utils Function ========== //
+# include <stdlib.h>
+# include <unistd.h>
+
+typedef struct s_gnl_list
+{
+	int					fd;
+	char				*reminder;
+	struct s_gnl_list	*next;
+}	t_gnl_list;
+
+char	*get_next_line(int fd);
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin(const char *s1, const char *s2);
+char	*gnl_get_line(const char *rem);
+char	*gnl_get_remin(const char *rem);
 
 #endif

@@ -6,20 +6,20 @@
 /*   By: arharafi <arharafi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/10 15:55:37 by arharafi          #+#    #+#             */
-/*   Updated: 2026/11/13 08:11:04 by arharafi         ###   ########.fr       */
+/*   Updated: 2026/11/16 08:24:43 by arharafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*free_reminder(char **reminder)
+static char	*free_reminder(char **reminder)
 {
 	free(*reminder);
 	*reminder = NULL;
 	return (NULL);
 }
 
-char	*get_line(char *reminder)
+static char	*get_line(char *reminder)
 {
 	size_t		i;
 	char		*line;
@@ -40,7 +40,7 @@ char	*get_line(char *reminder)
 	return (line);
 }
 
-char	*get_remin(char *reminder)
+static char	*get_remin(char *reminder)
 {
 	size_t		i;
 	size_t		j;
@@ -64,11 +64,11 @@ char	*get_remin(char *reminder)
 	return (rem);
 }
 
-ssize_t	fill_reminder(int fd, char **reminder)
+static ssize_t	fill_reminder(int fd, char **reminder)
 {
-	char	*buffer;
-	char	*tmp;
-	ssize_t	bytes;
+	char		*buffer;
+	char		*tmp;
+	ssize_t		bytes;
 
 	buffer = malloc((size_t)BUFFER_SIZE + 1);
 	if (!buffer)

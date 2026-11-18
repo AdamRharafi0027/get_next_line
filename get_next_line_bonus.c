@@ -5,84 +5,80 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: arharafi <arharafi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/12 19:10:37 by arharafi          #+#    #+#             */
-/*   Updated: 2026/11/13 08:11:38 by arharafi         ###   ########.fr       */
+/*   Created: 2026/11/16 09:56:41 by arharafi          #+#    #+#             */
+/*   Updated: 2026/11/17 07:58:27 by arharafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-char	*free_reminder(char **reminder)
+static t_gnl_list	*find_node(t_gnl_list **head, int fd)
 {
-	free(*reminder);
-	*reminder = NULL;
+	t_gnl_list	*cur;
+
+	cur = *head;
+	while (cur)
+	{
+		if (cur->fd == fd)
+			return (cur);
+		cur = cur->next;
+	}
+	cur = malloc(sizeof(t_gnl_list));
+	if (!cur)
+		return (NULL);
+	cur->fd = fd;
+	cur->reminder = NULL;
+	cur->next = *head;
+	*head = cur;
+	return (cur);
+}
+
+static char	*free_node(t_gnl_list **lst, int fd)
+{
+	t_gnl_list	*current;
+	t_gnl_list	*previous;
+
+	if (!lst || !*lst)
+		return (NULL);
+	current = *lst;
+	previous = NULL;
+	while (current)
+	{
+		if (current->fd == fd)
+		{
+			if (previous)
+				previous->next = current->next;
+			else
+				*lst = current->next;
+			free(current->reminder);
+			free(current);
+			return (NULL);
+		}
+		previous = current;
+		current = current->next;
+	}
 	return (NULL);
 }
 
-char	*get_line(char *reminder)
+static ssize_t	fill_reminder(int fd, t_gnl_list *node)
 {
-	size_t		i;
-	char		*line;
-
-	if (!reminder)
-		return (NULL);
-	i = 0;
-	while (reminder[i] && reminder[i] != '\n')
-		i++;
-	if (reminder[i] == '\n')
-		i++;
-	line = malloc(i + 1);
-	if (!line)
-		return (NULL);
-	line[i] = '\0';
-	while (i--)
-		line[i] = reminder[i];
-	return (line);
-}
-
-char	*get_remin(char *reminder)
-{
-	size_t		i;
-	size_t		j;
-	char		*rem;
-
-	if (!reminder)
-		return (NULL);
-	i = 0;
-	while (reminder[i] && reminder[i] != '\n')
-		i++;
-	if (!reminder[i] || !reminder[i + 1])
-		return (NULL);
-	rem = malloc(ft_strlen(reminder + i + 1) + 1);
-	if (!rem)
-		return (NULL);
-	j = 0;
-	i++;
-	while (reminder[i])
-		rem[j++] = reminder[i++];
-	rem[j] = '\0';
-	return (rem);
-}
-
-ssize_t	fill_reminder(int fd, char **reminder)
-{
-	char		*buffer;
-	char		*tmp;
-	ssize_t		bytes;
+	char	*buffer;
+	char	*tmp;
+	ssize_t	bytes;
 
 	buffer = malloc((size_t)BUFFER_SIZE + 1);
 	if (!buffer)
 		return (-1);
 	bytes = 1;
-	while (bytes > 0 && (!*reminder || !ft_strchr(*reminder, '\n')))
+	while (bytes > 0 && !ft_strchr(node->reminder, '\n'))
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
 		if (bytes <= 0)
 			break ;
 		buffer[bytes] = '\0';
-		tmp = ft_strjoin(*reminder, buffer);
-		free(*reminder);
-		*reminder = tmp;
+		tmp = ft_strjoin(node->reminder, buffer);
+		free(node->reminder);
+		node->reminder = tmp;
 		if (!tmp)
 			bytes = -1;
 	}
@@ -90,23 +86,26 @@ ssize_t	fill_reminder(int fd, char **reminder)
 	return (bytes);
 }
 
-char	*get_next_line_bonus(int fd)
+char	*get_next_line(int fd)
 {
-	static char	*reminder[FD_MAX];
-	char		*line;
-	char		*tmp;
+	static t_gnl_list	*head;
+	t_gnl_list			*node;
+	char				*line;
+	char				*tmp;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= FD_MAX)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+		return (free_node(&head, fd));
+	node = find_node(&head, fd);
+	if (!node)
 		return (NULL);
-	if (read(fd, 0, 0) < 0 || fill_reminder(fd, &reminder[fd]) < 0)
-		return (free_reminder(&reminder[fd]));
-	if (!reminder[fd] || !reminder[fd][0])
-		return (free_reminder(&reminder[fd]));
-	line = get_line(reminder[fd]);
+	if (fill_reminder(fd, node) < 0
+		|| !node->reminder || !node->reminder[0])
+		return (free_node(&head, fd));
+	line = gnl_get_line(node->reminder);
 	if (!line)
-		return (free_reminder(&reminder[fd]));
-	tmp = get_remin(reminder[fd]);
-	free(reminder[fd]);
-	reminder[fd] = tmp;
+		return (free_node(&head, fd));
+	tmp = gnl_get_remin(node->reminder);
+	free(node->reminder);
+	node->reminder = tmp;
 	return (line);
 }
