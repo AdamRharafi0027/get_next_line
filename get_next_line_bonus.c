@@ -6,7 +6,7 @@
 /*   By: arharafi <arharafi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/16 09:56:41 by arharafi          #+#    #+#             */
-/*   Updated: 2026/11/17 07:58:27 by arharafi         ###   ########.fr       */
+/*   Updated: 2026/11/19 11:43:57 by arharafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*get_next_line(int fd)
 	char				*line;
 	char				*tmp;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (free_node(&head, fd));
 	node = find_node(&head, fd);
 	if (!node)

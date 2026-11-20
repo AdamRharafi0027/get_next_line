@@ -6,7 +6,7 @@
 /*   By: arharafi <arharafi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/10 15:55:37 by arharafi          #+#    #+#             */
-/*   Updated: 2026/11/16 08:24:43 by arharafi         ###   ########.fr       */
+/*   Updated: 2026/11/20 11:04:18 by arharafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		*tmp;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (free_reminder(&reminder));
 	if (fill_reminder(fd, &reminder) < 0)
 		return (free_reminder(&reminder));
