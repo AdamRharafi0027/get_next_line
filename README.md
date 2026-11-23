@@ -152,7 +152,8 @@ and the buffer
 That is 0 in the read()<sub>syscall<sub>
 
 ### And for the bonus :
-	i just add an array of statics and a max fd in the header files and for each fd has it own reminder and lines
+	i just add a static struct with members fd and reminder and instead of sending the char *reminder we send node->reminder and free the node
+	and concatenate the previous with the next of the removed to stay linked and a find node function that if is not exist created 
 
 
 <h3 style="background: linear-gradient(to right, #8bffff, #00cdac); -webkit-background-clip: text; -webkit-text-fill-color: transparent; ">
