@@ -155,6 +155,6 @@ That is 0 in the read()<sub>syscall<sub>
 	i just add an array of statics and a max fd in the header files and for each fd has it own reminder and lines
 
 
-<h3 style="background: linear-gradient(to right, #8bffff, #00cdac); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block;">
+<h3 style="background: linear-gradient(to right, #8bffff, #00cdac); -webkit-background-clip: text; -webkit-text-fill-color: transparent; ">
     Created by Adam RHARAFI - 1337/42
 </h3>

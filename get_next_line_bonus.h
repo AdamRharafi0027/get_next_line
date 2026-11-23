@@ -6,7 +6,7 @@
 /*   By: arharafi <arharafi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/16 09:56:46 by arharafi          #+#    #+#             */
-/*   Updated: 2026/11/17 07:51:57 by arharafi         ###   ########.fr       */
+/*   Updated: 2026/11/23 08:48:20 by arharafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_BONUS_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 2
 # endif
 
 # include <stdlib.h>

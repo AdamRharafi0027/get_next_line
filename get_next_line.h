@@ -6,7 +6,7 @@
 /*   By: arharafi <arharafi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/09 16:10:47 by arharafi          #+#    #+#             */
-/*   Updated: 2026/11/20 10:31:45 by arharafi         ###   ########.fr       */
+/*   Updated: 2026/11/23 08:48:15 by arharafi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdlib.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 2
 # endif
 
 // ========== Main Function ========== //
